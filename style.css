@@ -645,7 +645,8 @@
       }
       .hero-center { padding: 3rem 1rem 0; }
       .hero-name {
-        font-size: clamp(3.4rem, 20vw, 5rem);
+        max-width: 100%;
+        font-size: clamp(2.85rem, 17vw, 5rem);
         line-height: 0.92;
       }
       .hero-subtitle {
@@ -761,4 +762,12 @@
         text-align: center;
       }
       .f-copy { line-height: 1.6; }
+    }
+
+    @media(max-width:380px){
+      .hero-name {
+        font-size: clamp(2.55rem, 16vw, 3.5rem);
+      }
+      .nav-links { gap: 0.55rem; }
+      .nav-links a { font-size: 0.54rem; }
     }
