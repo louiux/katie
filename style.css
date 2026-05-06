@@ -424,22 +424,22 @@
     }
     .gallery-strip-inner {
       display: flex;
+      width: max-content;
+      will-change: transform;
+    }
+    .gallery-strip-group {
+      display: flex;
       gap: 0.75rem;
-      animation: slideLeft 30s linear infinite;
+      padding-right: 0.75rem;
       width: max-content;
     }
-    .gallery-strip-inner img {
+    .gallery-strip-group img {
       height: 280px;
       width: auto;
       object-fit: cover;
       flex-shrink: 0;
       border-radius: 4px;
     }
-    @keyframes slideLeft {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
     /* ── EXPERIENCE ── */
     .experience {
       padding: 6rem 2.5rem;
@@ -734,7 +734,7 @@
       .proj-solid-text p { font-size: 1.45rem; }
 
       .gallery-strip { padding: 2.5rem 0; }
-      .gallery-strip-inner img { height: 190px; }
+      .gallery-strip-group img { height: 190px; }
 
       .exp-list { margin-top: 2rem; }
       .exp-row {

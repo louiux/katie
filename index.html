@@ -299,19 +299,22 @@
   <!-- GALLERY STRIP -->
   <div class="gallery-strip">
     <div class="gallery-strip-inner">
-      <img src="images/img-strip-1.jpeg" alt="Fashion portfolio gallery image">
-      <img src="images/img-strip-2.jpeg" alt="Editorial fashion gallery image">
-      <img src="images/img-strip-3.jpeg" alt="Campaign development gallery image">
-      <img src="images/img1.jpeg" alt="Katie Grimwood portfolio gallery image">
-      <img src="images/img2.jpeg" alt="Fashion promotion gallery image">
-      <img src="images/img3.jpeg" alt="Styled campaign gallery image">
-      <!-- duplicate for seamless loop -->
-      <img src="images/img-strip-1.jpeg" alt="">
-      <img src="images/img-strip-2.jpeg" alt="">
-      <img src="images/img-strip-3.jpeg" alt="">
-      <img src="images/img1.jpeg" alt="">
-      <img src="images/img2.jpeg" alt="">
-      <img src="images/img3.jpeg" alt="">
+      <div class="gallery-strip-group">
+        <img src="images/img-strip-1.jpeg" alt="Fashion portfolio gallery image">
+        <img src="images/img-strip-2.jpeg" alt="Editorial fashion gallery image">
+        <img src="images/img-strip-3.jpeg" alt="Campaign development gallery image">
+        <img src="images/img1.jpeg" alt="Katie Grimwood portfolio gallery image">
+        <img src="images/img2.jpeg" alt="Fashion promotion gallery image">
+        <img src="images/img3.jpeg" alt="Styled campaign gallery image">
+      </div>
+      <div class="gallery-strip-group" aria-hidden="true">
+        <img src="images/img-strip-1.jpeg" alt="">
+        <img src="images/img-strip-2.jpeg" alt="">
+        <img src="images/img-strip-3.jpeg" alt="">
+        <img src="images/img1.jpeg" alt="">
+        <img src="images/img2.jpeg" alt="">
+        <img src="images/img3.jpeg" alt="">
+      </div>
     </div>
   </div>
 
@@ -412,6 +415,30 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Gallery reel
+    const galleryTrack = document.querySelector('.gallery-strip-inner');
+    const galleryGroup = document.querySelector('.gallery-strip-group');
+    if (galleryTrack && galleryGroup) {
+      let reelOffset = 0;
+      let lastFrame = performance.now();
+      const reelSpeed = 42;
+
+      function animateGalleryReel(now) {
+        const distance = galleryGroup.offsetWidth;
+        const delta = Math.min(now - lastFrame, 64);
+        lastFrame = now;
+
+        if (distance > 0) {
+          reelOffset = (reelOffset + (delta / 1000) * reelSpeed) % distance;
+          galleryTrack.style.transform = `translate3d(${-reelOffset}px, 0, 0)`;
+        }
+
+        requestAnimationFrame(animateGalleryReel);
+      }
+
+      requestAnimationFrame(animateGalleryReel);
+    }
   </script>
 </body>
 
