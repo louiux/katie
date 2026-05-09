@@ -123,7 +123,7 @@
     <div class="proj-grid">
 
       <!-- 1 large: PLT x Coachella -->
-      <div class="proj g1 reveal" tabindex="0">
+      <div class="proj g1 reveal lightbox-trigger" tabindex="0">
         <img src="images/img5.jpeg" alt="PrettyLittleThing x Coachella campaign strategy board" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">01</p>
@@ -139,7 +139,7 @@
       </div>
 
       <!-- 2: PLT microtrend detail -->
-      <div class="proj g2 reveal reveal-d1" tabindex="0">
+      <div class="proj g2 reveal reveal-d1 lightbox-trigger" tabindex="0">
         <img src="images/img6.jpeg" alt="PrettyLittleThing campaign detail mockup" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">01b</p>
@@ -161,7 +161,7 @@
       </div>
 
       <!-- 4: Sken Studios -->
-      <div class="proj g4 reveal reveal-d1" tabindex="0">
+      <div class="proj g4 reveal reveal-d1 lightbox-trigger" tabindex="0">
         <img src="images/sken.png" alt="Female empowerment editorial collage work" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">02</p>
@@ -181,7 +181,7 @@
       </div>
 
       <!-- 5: Solidarity zine shoot -->
-      <div class="proj g5 reveal reveal-d2" tabindex="0">
+      <div class="proj g5 reveal reveal-d2 lightbox-trigger" tabindex="0">
         <img src="images/img8.jpeg" alt="SOLIDARITY zine editorial shoot image" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">03</p>
@@ -197,7 +197,7 @@
       </div>
 
       <!-- 6: Manchester street -->
-      <div class="proj g6 reveal reveal-d3" tabindex="0">
+      <div class="proj g6 reveal reveal-d3 lightbox-trigger" tabindex="0">
         <img src="images/interviews.png" alt="SOLIDARITY zine editorial shoot image" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">03b</p>
@@ -206,13 +206,14 @@
         <div class="proj-overlay">
           <p class="proj-num">03b / 06</p>
           <h3 class="proj-name">SOLIDARITY Interviews</h3>
-          <p class="proj-detail">Interviews conducted for Solidarity magazine to discover what Manchester's music scene meant to people at the time.</p>
+          <p class="proj-detail">Interviews conducted for Solidarity magazine to discover what Manchester's music scene
+            meant to people at the time.</p>
           <span class="proj-badge">Interview</span>
         </div>
       </div>
 
-      <!-- 7: Khatri Batik -->
-      <div class="proj g7 reveal" tabindex="0">
+      <!-- 7: ZARA -->
+      <div class="proj g7 reveal lightbox-trigger" tabindex="0">
         <img src="images/zara 1.png" alt="ZARA campaign: SUITED" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">04</p>
@@ -227,7 +228,7 @@
       </div>
 
       <!-- 8: Dazed zine -->
-      <div class="proj g8 reveal reveal-d1" tabindex="0">
+      <div class="proj g8 reveal reveal-d1 lightbox-trigger" tabindex="0">
         <img src="images/img11.jpeg" alt="Dazed fashion runway poster zine design" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">05</p>
@@ -243,7 +244,7 @@
       </div>
 
       <!-- 9: Crisis popup -->
-      <div class="proj g9 reveal reveal-d2" tabindex="0">
+      <div class="proj g9 reveal reveal-d2 lightbox-trigger" tabindex="0">
         <img src="images/img12.jpeg" alt="Crisis charity pop-up store campaign concept" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">06</p>
@@ -259,7 +260,7 @@
       </div>
 
       <!-- 10: Crisis instagram -->
-      <div class="proj g10 reveal reveal-d3" tabindex="0">
+      <div class="proj g10 reveal reveal-d3 lightbox-trigger" tabindex="0">
         <img src="images/img13.jpeg" alt="Crisis charity social content mockup" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">06b</p>
@@ -272,7 +273,7 @@
       </div>
 
       <!-- 11: New Balance -->
-      <div class="proj g11 reveal" tabindex="0">
+      <div class="proj g11 reveal lightbox-trigger" tabindex="0">
         <img src="images/img14.jpeg" alt="New Balance Made in UK zine project" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">+</p>
@@ -287,7 +288,7 @@
       </div>
 
       <!-- 12: Becky Kayll -->
-      <div class="proj g12 reveal reveal-d1" tabindex="0">
+      <div class="proj g12 reveal reveal-d1 lightbox-trigger" tabindex="0">
         <img src="images/img15.jpeg" alt="Becky Kayll collaboration content work" loading="lazy">
         <div class="proj-label">
           <p class="proj-num">+</p>
@@ -406,6 +407,12 @@
     <p class="f-logo">KG</p>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <span class="lightbox-close" aria-label="Close">&times;</span>
+    <img class="lightbox-img" src="" alt="">
+  </div>
+
   <script>
     // Cursor
     const cur = document.getElementById('cur');
@@ -447,6 +454,41 @@
 
       requestAnimationFrame(animateGalleryReel);
     }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = lightbox.querySelector('.lightbox-img');
+
+    const openLightbox = (proj) => {
+      const img = proj.querySelector('img');
+      if (!img) return;
+      lightboxImg.src = proj.dataset.full || img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.proj.lightbox-trigger').forEach(proj => {
+      proj.addEventListener('click', () => openLightbox(proj));
+      proj.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(proj);
+        }
+      });
+    });
+
+    lightbox.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
   </script>
 </body>
 
